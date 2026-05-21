@@ -843,4 +843,22 @@
   /* Font family utilities */
   .font-display { font-family: var(--font-display); }
   .font-mono    { font-family: var(--font-mono); }
+
+	.hover\:animate-bounce-gentle:hover {
+    animation: bounceGentle 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.3) infinite alternate;
+  }
+
+  @keyframes bounceGentle {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-6px); }
+  }
+
+	.slideIn {
+		animation: slideIn 0.5s ease-out forwards;
+	}
+
+	@keyframes slideIn {
+		from { transform: translateY(-100%); }
+		to { transform: translateY(0); }
+	}
 }

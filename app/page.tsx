@@ -61,18 +61,12 @@ const features = [
 export default function Page() {
   return (
     <main className="min-h-screen bg-background bg-space-gradient">
-
-      {/* ── Navbar ────────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 border-b border-border glass-sm">
+      {/* <header className="sticky top-0 z-50 border-b border-border glass-sm">
         <div className="container-app">
           <div className="flex items-center justify-between h-14 md:h-16">
-
-            {/* Logo */}
             <span className="font-display font-bold text-xl tracking-tight text-gradient-nebula">
               COSMOS UI
             </span>
-
-            {/* Nav — hidden on mobile */}
             <nav className="max-md:hidden flex items-center gap-1">
               <a href="#" className="btn btn-ghost btn-sm">Docs</a>
               <a href="#" className="btn btn-ghost btn-sm">Components</a>
@@ -88,7 +82,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="container-app pt-20 pb-16 md:pt-28 md:pb-24 text-center">

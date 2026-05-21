@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "next-themes";
 import "../styles/globals.css";
+import { StartDialog } from "@/components/ui/StartDialog";
 
 export const metadata: Metadata = {
   title: {
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
+					<StartDialog />
           {children}
         </ThemeProvider>
       </body>
