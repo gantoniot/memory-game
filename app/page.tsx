@@ -2,21 +2,11 @@
 // ─── Space Theme Showcase — all tokens and component classes in action ─────────
 "use client";
 
-import { useTheme } from "next-themes";
-
-// ── Theme toggle ──────────────────────────────────────────────────────────────
-function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  return (
-    <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="btn btn-subtle btn-sm"
-      aria-label="Toggle theme"
-    >
-      {theme === "dark" ? "☀ Light" : "☾ Dark"}
-    </button>
-  );
-}
+import { MemoryCard } from "@/components/ui/Card";
+import { useEffect, useEffectEvent, useState } from "react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useMemoryGame } from "@/hooks/useMemory";
+import { ResultModal } from "@/components/ui/ResultModal";
 
 // ── Feature cards ─────────────────────────────────────────────────────────────
 const features = [
@@ -59,63 +49,42 @@ const features = [
 ];
 
 export default function Page() {
+  const { state, flipCard, closeModal, reset, isWon } = useMemoryGame();
+
+	const selectedCards = state.selected.map(id =>
+    state.cards.find(c => c.id === id)!
+  );
+
   return (
     <main className="min-h-screen bg-background bg-space-gradient">
-      {/* <header className="sticky top-0 z-50 border-b border-border glass-sm">
+      <header className="sticky top-0 z-50 ">
         <div className="container-app">
-          <div className="flex items-center justify-between h-14 md:h-16">
-            <span className="font-display font-bold text-xl tracking-tight text-gradient-nebula">
-              COSMOS UI
-            </span>
-            <nav className="max-md:hidden flex items-center gap-1">
-              <a href="#" className="btn btn-ghost btn-sm">Docs</a>
-              <a href="#" className="btn btn-ghost btn-sm">Components</a>
-              <a href="#" className="btn btn-ghost btn-sm">Themes</a>
-            </nav>
-
+          <div className="flex items-center justify-end h-14 md:h-16">
             <div className="flex items-center gap-2">
               <ThemeToggle />
-              <button className="btn btn-primary btn-sm max-md:hidden">
-                Get started
-              </button>
-              <button className="btn btn-ghost btn-sm md:hidden">☰</button>
             </div>
           </div>
         </div>
-      </header> */}
+      </header>
 
-      {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="container-app pt-20 pb-16 md:pt-28 md:pb-24 text-center">
-        <div className="flex flex-col items-center gap-6 md:gap-8 max-w-4xl mx-auto">
-
-          <span className="badge badge-nebula">
-            ✦ Tailwind CSS v4 · Space Theme
-          </span>
-
-          <h1 className="text-fluid-2xl font-display font-bold tracking-tight
-                         text-gradient-nebula leading-none">
-            Beyond the Event Horizon
-          </h1>
-
-          <p className="text-fluid-md text-foreground-muted max-w-2xl leading-relaxed">
-            A design system built for the void. Deep purples, absolute blacks,
-            and nebula blues — a UI that feels like it was forged among the stars.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-            <button className="btn btn-primary btn-lg w-full sm:w-auto">
-              Explore the cosmos →
-            </button>
-            <button className="btn btn-outline btn-lg w-full sm:w-auto">
-              View source
-            </button>
-          </div>
-
-          {/* Inline code sample */}
-          <p className="text-foreground-subtle text-sm font-mono">
-            <code>npm install tailwindcss@4 @tailwindcss/postcss</code>
-          </p>
+      <section className="container-app py-4 md:py-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          {
+					state.cards.map((card) => (
+						<MemoryCard key={card.id} card={card} onFlipped={flipCard /* setSelectedCards([...selectedCards.map((card) => {
+							if(card.id == f.id && selectedCards.filter(card => card.flipped && !card.paired).length < 2)
+								card.flipped = true;
+							return card;
+						})]) */} />
+					))
+					}
         </div>
+				<ResultModal
+            kind={state.modal}
+            cardA={selectedCards[0] ?? null}
+            cardB={selectedCards[1] ?? null}
+            onClose={closeModal}
+          />
       </section>
 
       {/* ── Feature grid ──────────────────────────────────────────────────── */}
