@@ -96,7 +96,6 @@ export function useMemoryGame() {
     if (state.locked || !card || card.status !== "hidden" || state.selected.length >= 2) return;
 
 		const isFirstFlip = state.selected.length === 0 && !state.timerRunning;
-    const startTime = state.startTime ?? Date.now();
     const nextSelected = [...state.selected, id];
 
     setState(prev => ({

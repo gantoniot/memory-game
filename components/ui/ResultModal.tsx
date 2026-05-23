@@ -2,6 +2,7 @@
 "use client";
 
 import type { Card, ModalKind } from "@/types/memory";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 
 interface Props {
   kind:    ModalKind;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export function ResultModal({ kind, cardA, cardB, onClose }: Props) {
+
   if (!kind || !cardA || !cardB) return null;
 
   const isSuccess = kind === "success";
@@ -19,6 +21,8 @@ export function ResultModal({ kind, cardA, cardB, onClose }: Props) {
     <div className="absolute inset-0 z-20 flex items-center justify-center
                     bg-void-950/85 backdrop-blur-sm rounded-2xl
                     animate-in fade-in duration-300">
+											{isSuccess ? <audio src="/correct.mp3" autoPlay /> :
+			<audio src="/incorrect.mp3" autoPlay />}
       <div className={[
         "glass rounded-2xl p-8 max-w-xs w-full mx-4 flex flex-col items-center gap-4 text-center",
         isSuccess ? "border-aurora-700/35" : "border-supernova-700/35",
