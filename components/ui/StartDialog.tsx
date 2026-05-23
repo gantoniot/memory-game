@@ -51,11 +51,11 @@ export function StartDialog() {
         </h2>
 
         <p className="text-foreground-muted text-sm leading-relaxed max-w-xs">
-          You are about to enter a{" "}
-          <span className="text-nebula-300 font-medium">deep space interface</span>.
+					<span className="text-nebula-300 font-medium">deep space interface</span>.
           Signal lock established. Navigation systems online.{" "}
           <span className="text-nebula-300 font-medium">Proceed when ready.</span>
         </p>
+				<p>Find the pairs before time runs out!</p>
 
         {/* CTA button — bounce on hover */}
         <button

@@ -7,7 +7,7 @@ export interface Card {
   status:  CardStatus;
 }
 
-export type ModalKind = "success" | "fail" | "expired" | null;
+export type ModalKind = "success" | "fail" | "expired" | "completed" | null;
 
 export interface GameState {
   cards: Card[];

@@ -13,6 +13,29 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 
   const isSuccess = kind === "success";
 
+	if (kind === "completed") {
+  	return (
+			<div className="absolute inset-0 z-20 flex items-center justify-center
+											bg-void-950/90 backdrop-blur-sm rounded-2xl
+											animate-in fade-in duration-300">
+				<div className="glass border-supernova-800/40 rounded-2xl p-8
+												max-w-xs w-full mx-4 flex flex-col items-center gap-4 text-center">
+
+					<h3 className="font-display font-semibold text-star-100">
+						You did it!
+					</h3>
+
+					<button onClick={onReset} className={`mt-2 btn btn-outline rounded-full
+                     hover:animate-bounce focus-visible:animate-none
+                     hover:border-nebula-500 hover:text-nebula-200
+                     hover:bg-nebula-950/60 transition-all duration-700 ease-out`}>
+						PLAY AGAIN
+					</button>
+				</div>
+			</div>
+		);
+	}
+
 	if (kind === "expired") {
   	return (
 			<div className="absolute inset-0 z-20 flex items-center justify-center
@@ -21,18 +44,15 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 				<div className="glass border-supernova-800/40 rounded-2xl p-8
 												max-w-xs w-full mx-4 flex flex-col items-center gap-4 text-center">
 
-					<div className="size-12 rounded-full bg-supernova-950 border border-supernova-700/30
-													flex items-center justify-center text-supernova-400 text-xl">
-						◷
-					</div>
-
 					<h3 className="font-display font-semibold text-star-100">
-						Signal lost
+						Oops! you didn't find them all
 					</h3>
 
-					<button onClick={onReset} className="btn btn-outline rounded-full
-																								border-supernova-600 text-supernova-400 mt-1">
-						See final board
+					<button onClick={onReset} className={`mt-2 btn btn-outline rounded-full
+                     hover:animate-bounce focus-visible:animate-none
+                     hover:border-nebula-500 hover:text-nebula-200
+                     hover:bg-nebula-950/60 transition-all duration-700 ease-out`}>
+						PLAY AGAIN
 					</button>
 				</div>
 			</div>
@@ -67,8 +87,8 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 
 					<p className="text-foreground-muted text-sm leading-relaxed">
 						{isSuccess
-							? "Correct! These two cards form a pair and will stay face-up."
-							: "These cards don't match. They'll flip back so you can try again."}
+							? "nice! it's a match"
+							: "sorry, but this is not a match"}
 					</p>
 
 					<button
