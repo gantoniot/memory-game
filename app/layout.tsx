@@ -5,10 +5,10 @@ import { StartDialog } from "@/components/ui/StartDialog";
 
 export const metadata: Metadata = {
   title: {
-    default:  "Cosmos UI",
-    template: "%s · Cosmos UI",
+    default:  "Cosmic Memory",
+    template: "%s · Cosmic Memory",
   },
-  description: "A space-themed Next.js application.",
+  description: "A space-themed Memory Game.",
 };
 
 export const viewport: Viewport = {
