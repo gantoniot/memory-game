@@ -1,54 +1,12 @@
-// app/page.tsx
-// ─── Space Theme Showcase — all tokens and component classes in action ─────────
 "use client";
 
 import { MemoryCard } from "@/components/ui/Card";
-import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useMemoryGame } from "@/hooks/useMemory";
 import { ResultModal } from "@/components/ui/ResultModal";
 import { TimerBar } from "@/components/ui/Timer";
 import { AudioToggle } from "@/components/ui/AudioToggle";
-
-// ── Feature cards ─────────────────────────────────────────────────────────────
-const features = [
-  {
-    badge:  { label: "Palette",  cls: "badge-nebula" },
-    icon:   "◈",
-    title:  "OKLCH Color System",
-    desc:   "Nebula purples, void blacks, cosmos blues. Perceptually uniform, Display P3 ready.",
-  },
-  {
-    badge:  { label: "Type",     cls: "badge-cosmos" },
-    icon:   "Aa",
-    title:  "Syne + DM Sans",
-    desc:   "Geometric display face paired with a clean body typeface. Space Mono for code.",
-  },
-  {
-    badge:  { label: "Tokens",   cls: "badge-aurora" },
-    icon:   "✦",
-    title:  "Semantic Tokens",
-    desc:   "All colors are aliased through semantic variables that adapt to light/dark mode.",
-  },
-  {
-    badge:  { label: "Layout",   cls: "badge-nebula" },
-    icon:   "⊞",
-    title:  "Responsive Grid",
-    desc:   "Mobile-first breakpoints, container queries, and fluid typography — all native to v4.",
-  },
-  {
-    badge:  { label: "Glass",    cls: "badge-nova" },
-    icon:   "◑",
-    title:  "Glassmorphism",
-    desc:   "Space-station panel aesthetic with backdrop-blur and translucent surfaces.",
-  },
-  {
-    badge:  { label: "Glow",     cls: "badge-error" },
-    icon:   "⬡",
-    title:  "Nebula Glow Effects",
-    desc:   "Glow shadows, gradient text, and luminous borders for depth and atmosphere.",
-  },
-];
 
 export default function Page() {
   const { state, flipCard, closeModal, reset, totalTime, timeLeft, timerActive } = useMemoryGame();
@@ -71,7 +29,7 @@ export default function Page() {
       </header>
 
       <section className="container-app py-2">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-5 place-items-center">
           {
 					state.cards.map((card) => (
 						<MemoryCard key={card.id} card={card} onFlipped={flipCard} />

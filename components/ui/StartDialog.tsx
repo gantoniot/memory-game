@@ -8,13 +8,16 @@ export function StartDialog() {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  // Mount with a tiny delay so the CSS transition fires cleanly
   useEffect(() => {
+		document.body.style.overflow = "hidden";
     const t = setTimeout(() => setVisible(true), 50);
     return () => clearTimeout(t);
   }, []);
 
-  const handleEnter = () => setDismissed(true);
+  const handleEnter = () => {
+		document.body.style.overflow = "auto";
+		setDismissed(true);
+	};
 
   return (
     <div
@@ -39,10 +42,9 @@ export function StartDialog() {
         ].join(" ")}
       >
         <div className={`p-1 rounded-3xl bg-star-100 transition-all duration-700 ease-out ${visible ? "translate-y-0" : "-translate-y-40"}`}>
-					<Image src={Logo} alt="Logo" width={200} height={200} />
+					<Image src={Logo} alt="Logo" width={100} height={100} />
 				</div>
 
-        {/* Copy */}
         <h2
           id="welcome-title"
           className="font-display font-bold text-xl text-star-100 tracking-tight"
@@ -57,7 +59,6 @@ export function StartDialog() {
         </p>
 				<p>Find the pairs before time runs out!</p>
 
-        {/* CTA button — bounce on hover */}
         <button
           onClick={handleEnter}
           className={`mt-2 btn btn-outline rounded-full

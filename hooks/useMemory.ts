@@ -44,6 +44,7 @@ export function useMemoryGame() {
 
         // Time ran out — stop the interval on the next render cycle
         if (next <= 0) {
+					document.body.style.overflow = "hidden";
           return {
             ...prev,
             timeLeft:     0,
@@ -73,6 +74,8 @@ export function useMemoryGame() {
     const isMatch = a.pairId === b.pairId;
 		const newMatchedPairs = state.matchedPairs + (isMatch ? 1 : 0);
 		const allDone = isMatch && newMatchedPairs === PAIRS.length;
+
+		document.body.style.overflow = "hidden";
 
     setState(prev => ({
       ...prev,
@@ -121,6 +124,8 @@ export function useMemoryGame() {
 			return { ...state, modal: null };
 		}
 
+		document.body.style.overflow = "auto";
+
     setState(prev => {
       const wasSuccess = prev.modal === "success";
       return {
@@ -139,11 +144,13 @@ export function useMemoryGame() {
   }, []);
 
   const reset = useCallback(() => {
+		document.body.style.overflow = "auto";
 		if (intervalRef.current) clearInterval(intervalRef.current);
     setState({ ...INITIAL_STATE, cards: buildDeck() });
   }, []);
 
 	const isExpired = state.modal === "expired";
+
 
   return { state, flipCard, closeModal, reset, isExpired, timeLeft: state.timeLeft, timerActive: state.timerRunning, totalTime: TOTAL_TIME };
 }

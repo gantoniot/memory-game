@@ -15,7 +15,7 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 
 	if (kind === "completed") {
   	return (
-			<div className="absolute inset-0 z-20 flex items-center justify-center
+			<div className="fixed inset-0 z-20 flex items-center justify-center
 											bg-void-950/90 backdrop-blur-sm rounded-2xl
 											animate-in fade-in duration-300">
 				<div className="glass border-supernova-800/40 rounded-2xl p-8
@@ -38,14 +38,14 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 
 	if (kind === "expired") {
   	return (
-			<div className="absolute inset-0 z-20 flex items-center justify-center
+			<div className="fixed inset-0 z-20 flex items-center justify-center
 											bg-void-950/90 backdrop-blur-sm rounded-2xl
 											animate-in fade-in duration-300">
 				<div className="glass border-supernova-800/40 rounded-2xl p-8
 												max-w-xs w-full mx-4 flex flex-col items-center gap-4 text-center">
 
 					<h3 className="font-display font-semibold text-star-100">
-						Oops! you didn't find them all
+						Oops! You didn't find them all
 					</h3>
 
 					<button onClick={onReset} className={`mt-2 btn btn-outline rounded-full
@@ -61,9 +61,9 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 
   if(kind === "success" || kind === "fail"){
 		return (
-			<div className="absolute inset-0 z-20 flex items-center justify-center
+			<div className="fixed inset-0 z-20 flex items-center justify-center
 											bg-void-950/85 backdrop-blur-sm rounded-2xl
-											animate-in fade-in duration-300">
+											animate-in fade-in duration-300 h-full">
 												{isSuccess ? <audio src="/correct.mp3" autoPlay /> :
 				<audio src="/incorrect.mp3" autoPlay />}
 				<div className={[
@@ -71,7 +71,6 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 					isSuccess ? "border-aurora-700/35" : "border-supernova-700/35",
 				].join(" ")}>
 
-					{/* Icon */}
 					<div className={[
 						"size-12 rounded-full flex items-center justify-center text-xl",
 						isSuccess
@@ -82,7 +81,7 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 					</div>
 
 					<h3 className="font-display font-semibold text-star-100">
-						{isSuccess ? `pair found!` : "No match"}
+						{isSuccess ? `Pair found!` : "No match"}
 					</h3>
 
 					<p className="text-foreground-muted text-sm leading-relaxed">
@@ -98,7 +97,7 @@ export function ResultModal({ kind, onClose, onReset }: Props) {
 							isSuccess ? "btn-outline border-aurora-600 text-aurora-400" : "btn-outline border-supernova-600 text-supernova-400",
 						].join(" ")}
 					>
-						{isSuccess ? "Keep going →" : "Try again"}
+						{isSuccess ? "Keep going!" : "Try again!"}
 					</button>
 				</div>
 			</div>
