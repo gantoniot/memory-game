@@ -3,10 +3,12 @@
 "use client";
 
 import { MemoryCard } from "@/components/ui/Card";
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useMemoryGame } from "@/hooks/useMemory";
 import { ResultModal } from "@/components/ui/ResultModal";
+import { TimerBar } from "@/components/ui/Timer";
+import { AudioToggle } from "@/components/ui/AudioToggle";
 
 // ── Feature cards ─────────────────────────────────────────────────────────────
 const features = [
@@ -49,173 +51,39 @@ const features = [
 ];
 
 export default function Page() {
-  const { state, flipCard, closeModal, reset, isWon } = useMemoryGame();
+  const { state, flipCard, closeModal, reset, isWon, totalTime, timeLeft, timerActive } = useMemoryGame();
 
-	const selectedCards = state.selected.map(id =>
-    state.cards.find(c => c.id === id)!
-  );
+	const bAudioRef = useRef<HTMLAudioElement | null>(null);
 
   return (
     <main className="min-h-screen bg-background bg-space-gradient">
+			<audio ref={bAudioRef} src="/background.mp3" />
       <header className="sticky top-0 z-50 ">
         <div className="container-app">
           <div className="flex items-center justify-end h-14 md:h-16">
             <div className="flex items-center gap-2">
+							<TimerBar timeLeft={timeLeft} totalTime={totalTime} active={timerActive} />
               <ThemeToggle />
+							<AudioToggle audio={bAudioRef} />
             </div>
           </div>
         </div>
       </header>
 
-      <section className="container-app py-4 md:py-10">
+      <section className="container-app py-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {
 					state.cards.map((card) => (
-						<MemoryCard key={card.id} card={card} onFlipped={flipCard /* setSelectedCards([...selectedCards.map((card) => {
-							if(card.id == f.id && selectedCards.filter(card => card.flipped && !card.paired).length < 2)
-								card.flipped = true;
-							return card;
-						})]) */} />
+						<MemoryCard key={card.id} card={card} onFlipped={flipCard} />
 					))
 					}
         </div>
 				<ResultModal
             kind={state.modal}
-            cardA={selectedCards[0] ?? null}
-            cardB={selectedCards[1] ?? null}
             onClose={closeModal}
+						onReset={reset}
           />
       </section>
-
-      {/* ── Feature grid ──────────────────────────────────────────────────── */}
-      <section className="container-app pb-20 md:pb-28">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {features.map((f) => (
-            <div key={f.title} className="card @container group">
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <span className={`badge ${f.badge.cls}`}>{f.badge.label}</span>
-                  <span className="text-2xl text-foreground-subtle group-hover:text-nebula-400
-                                   transition-colors duration-normal">
-                    {f.icon}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold text-base @sm:text-lg
-                                 text-foreground mb-1.5">
-                    {f.title}
-                  </h3>
-                  <p className="text-foreground-muted text-sm leading-relaxed line-clamp-3">
-                    {f.desc}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Component showcase ────────────────────────────────────────────── */}
-      <section className="container-app pb-24">
-        <div className="divider" />
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-          {/* Buttons panel */}
-          <div className="card-glow">
-            <h3 className="font-display font-semibold text-foreground mb-4">
-              Buttons
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              <button className="btn btn-primary">Primary</button>
-              <button className="btn btn-accent">Nova Accent</button>
-              <button className="btn btn-outline">Outline</button>
-              <button className="btn btn-ghost">Ghost</button>
-              <button className="btn btn-subtle">Subtle</button>
-              <button className="btn btn-primary btn-sm">Small</button>
-              <button className="btn btn-primary btn-lg">Large</button>
-              <button className="btn btn-primary" disabled>Disabled</button>
-            </div>
-          </div>
-
-          {/* Badges panel */}
-          <div className="card">
-            <h3 className="font-display font-semibold text-foreground mb-4">
-              Badges
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              <span className="badge badge-nebula">Nebula</span>
-              <span className="badge badge-nova">Nova</span>
-              <span className="badge badge-cosmos">Cosmos</span>
-              <span className="badge badge-aurora">Aurora</span>
-              <span className="badge badge-error">Supernova</span>
-            </div>
-
-            <h3 className="font-display font-semibold text-foreground mt-6 mb-4">
-              Text effects
-            </h3>
-            <div className="flex flex-col gap-2">
-              <p className="font-display font-bold text-xl text-glow-nebula">
-                Nebula glow text
-              </p>
-              <p className="font-display font-bold text-xl text-glow-nova">
-                Nova glow text
-              </p>
-              <p className="font-display font-bold text-xl text-gradient-nebula">
-                Gradient text
-              </p>
-              <p className="font-display font-bold text-xl text-gradient-cosmos">
-                Cosmos gradient
-              </p>
-            </div>
-          </div>
-
-          {/* Form inputs */}
-          <div className="card lg:col-span-2">
-            <h3 className="font-display font-semibold text-foreground mb-4">
-              Form inputs
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="label">Transmission target</label>
-                <input
-                  type="text"
-                  className="input"
-                  placeholder="Enter coordinates..."
-                />
-              </div>
-              <div>
-                <label className="label">Signal frequency</label>
-                <input
-                  type="email"
-                  className="input"
-                  placeholder="signal@cosmos.dev"
-                />
-              </div>
-              <div>
-                <label className="label">Error state</label>
-                <input
-                  type="text"
-                  className="input input-error"
-                  placeholder="Invalid input"
-                  aria-invalid="true"
-                />
-              </div>
-              <div>
-                <label className="label">Disabled</label>
-                <input
-                  type="text"
-                  className="input"
-                  placeholder="Offline"
-                  disabled
-                />
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
     </main>
   );
 }

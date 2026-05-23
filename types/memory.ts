@@ -7,13 +7,15 @@ export interface Card {
   status:  CardStatus;
 }
 
-export type ModalKind = "success" | "fail" | null;
+export type ModalKind = "success" | "fail" | "expired" | null;
 
 export interface GameState {
-  cards:        Card[];
-  selected:     number[];   // unevaluated cards
-  locked:       boolean;    // global click guard
+  cards: Card[];
+  selected: number[];   // unevaluated cards
+  locked: boolean;    // global click guard
   matchedPairs: number;
-  modal:        ModalKind;
-  startTime:    number | null;
+  modal: ModalKind;
+  startTime: number | null;
+	timeLeft: number;
+	timerRunning: boolean;
 }
