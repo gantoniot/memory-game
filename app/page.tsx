@@ -7,6 +7,7 @@ import { useEffect, useEffectEvent, useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useMemoryGame } from "@/hooks/useMemory";
 import { ResultModal } from "@/components/ui/ResultModal";
+import { TimerBar } from "@/components/ui/Timer";
 
 // ── Feature cards ─────────────────────────────────────────────────────────────
 const features = [
@@ -49,7 +50,7 @@ const features = [
 ];
 
 export default function Page() {
-  const { state, flipCard, closeModal, reset, isWon } = useMemoryGame();
+  const { state, flipCard, closeModal, reset, isWon, totalTime, timeLeft, timerActive } = useMemoryGame();
 
 	const selectedCards = state.selected.map(id =>
     state.cards.find(c => c.id === id)!
@@ -61,6 +62,7 @@ export default function Page() {
         <div className="container-app">
           <div className="flex items-center justify-end h-14 md:h-16">
             <div className="flex items-center gap-2">
+							<TimerBar timeLeft={timeLeft} totalTime={totalTime} active={timerActive} />
               <ThemeToggle />
             </div>
           </div>
