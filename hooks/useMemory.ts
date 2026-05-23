@@ -76,7 +76,7 @@ export function useMemoryGame() {
 
     setState(prev => ({
       ...prev,
-      modal: isMatch ? "success" : "fail",
+      modal: allDone ? "completed" : isMatch ? "success" : "fail",
       matchedPairs: isMatch ? prev.matchedPairs + 1 : prev.matchedPairs,
 			timerRunning: allDone ? false : prev.timerRunning,
       cards: prev.cards.map(c =>
@@ -143,8 +143,7 @@ export function useMemoryGame() {
     setState({ ...INITIAL_STATE, cards: buildDeck() });
   }, []);
 
-  const isWon = state.matchedPairs === PAIRS.length && state.modal === null;
 	const isExpired = state.modal === "expired";
 
-  return { state, flipCard, closeModal, reset, isWon, isExpired, timeLeft: state.timeLeft, timerActive: state.timerRunning, totalTime: TOTAL_TIME };
+  return { state, flipCard, closeModal, reset, isExpired, timeLeft: state.timeLeft, timerActive: state.timerRunning, totalTime: TOTAL_TIME };
 }

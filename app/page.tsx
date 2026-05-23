@@ -51,7 +51,7 @@ const features = [
 ];
 
 export default function Page() {
-  const { state, flipCard, closeModal, reset, isWon, totalTime, timeLeft, timerActive } = useMemoryGame();
+  const { state, flipCard, closeModal, reset, totalTime, timeLeft, timerActive } = useMemoryGame();
 
 	const bAudioRef = useRef<HTMLAudioElement | null>(null);
 
