@@ -1,65 +1,89 @@
-import Image from "next/image";
+// app/page.tsx
+// ─── Space Theme Showcase — all tokens and component classes in action ─────────
+"use client";
 
-export default function Home() {
+import { MemoryCard } from "@/components/ui/Card";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useMemoryGame } from "@/hooks/useMemory";
+import { ResultModal } from "@/components/ui/ResultModal";
+import { TimerBar } from "@/components/ui/Timer";
+import { AudioToggle } from "@/components/ui/AudioToggle";
+
+// ── Feature cards ─────────────────────────────────────────────────────────────
+const features = [
+  {
+    badge:  { label: "Palette",  cls: "badge-nebula" },
+    icon:   "◈",
+    title:  "OKLCH Color System",
+    desc:   "Nebula purples, void blacks, cosmos blues. Perceptually uniform, Display P3 ready.",
+  },
+  {
+    badge:  { label: "Type",     cls: "badge-cosmos" },
+    icon:   "Aa",
+    title:  "Syne + DM Sans",
+    desc:   "Geometric display face paired with a clean body typeface. Space Mono for code.",
+  },
+  {
+    badge:  { label: "Tokens",   cls: "badge-aurora" },
+    icon:   "✦",
+    title:  "Semantic Tokens",
+    desc:   "All colors are aliased through semantic variables that adapt to light/dark mode.",
+  },
+  {
+    badge:  { label: "Layout",   cls: "badge-nebula" },
+    icon:   "⊞",
+    title:  "Responsive Grid",
+    desc:   "Mobile-first breakpoints, container queries, and fluid typography — all native to v4.",
+  },
+  {
+    badge:  { label: "Glass",    cls: "badge-nova" },
+    icon:   "◑",
+    title:  "Glassmorphism",
+    desc:   "Space-station panel aesthetic with backdrop-blur and translucent surfaces.",
+  },
+  {
+    badge:  { label: "Glow",     cls: "badge-error" },
+    icon:   "⬡",
+    title:  "Nebula Glow Effects",
+    desc:   "Glow shadows, gradient text, and luminous borders for depth and atmosphere.",
+  },
+];
+
+export default function Page() {
+  const { state, flipCard, closeModal, reset, totalTime, timeLeft, timerActive } = useMemoryGame();
+
+	const bAudioRef = useRef<HTMLAudioElement | null>(null);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-background bg-space-gradient">
+			<audio ref={bAudioRef} src="/background.mp3" />
+      <header className="sticky top-0 z-50 ">
+        <div className="container-app">
+          <div className="flex items-center justify-end h-14 md:h-16">
+            <div className="flex items-center gap-2">
+							<TimerBar timeLeft={timeLeft} totalTime={totalTime} active={timerActive} />
+              <ThemeToggle />
+							<AudioToggle audio={bAudioRef} />
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      <section className="container-app py-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          {
+					state.cards.map((card) => (
+						<MemoryCard key={card.id} card={card} onFlipped={flipCard} />
+					))
+					}
         </div>
-      </main>
-    </div>
+				<ResultModal
+            kind={state.modal}
+            onClose={closeModal}
+						onReset={reset}
+          />
+      </section>
+    </main>
   );
 }
