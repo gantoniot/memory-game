@@ -25,7 +25,7 @@ export function MemoryCard({ card, onFlipped }: IMemoryCard){
 
 	const isVisible = card.status === "flipped" || card.status === "matched";
 
-	return <button type="button" onClick={() => onFlipped(card.id)} className="w-full h-84 outline-none perspective-midrange hover:cursor-pointer">
+	return <button type="button" onClick={() => onFlipped(card.id)} className="w-64 h-80 outline-none perspective-midrange hover:cursor-pointer">
 	<div className={`relative size-full transition-transform transform-3d ${isVisible ? "" : "-rotate-y-180"}`}>
 		<div className="absolute inset-0 size-full backface-hidden">
 			<div className="bg-nebula-100 h-full rounded-xl flex items-center justify-center">

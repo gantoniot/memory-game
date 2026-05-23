@@ -74,7 +74,7 @@ export default function Page() {
         </div>
       </header>
 
-      <section className="container-app py-4 md:py-10">
+      <section className="container-app py-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {
 					state.cards.map((card) => (

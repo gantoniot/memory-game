@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import type { Card, GameState, ModalKind } from "@/types/memory";
+import type { Card, GameState } from "@/types/memory";
 
 const TOTAL_TIME = 30;
 
@@ -89,7 +89,6 @@ export function useMemoryGame() {
   }
 
   const flipCard = useCallback((id: number) => {
-    /* const s = stateRef.current; */
     const card = state.cards.find(c => c.id === id);
 
     // Guard: locked, already face-up, or already have two selected
@@ -104,7 +103,6 @@ export function useMemoryGame() {
 			timerRunning: prev.timerRunning ? true : isFirstFlip,
       selected: [...prev.selected, ...nextSelected],
       cards: prev.cards.map(c => c.id === id ? { ...c, status: "flipped" } : c),
-      // Lock immediately when second card is chosen
       locked: nextSelected.length === 2,
     }));
 
