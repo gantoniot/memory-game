@@ -55,10 +55,6 @@ export default function Page() {
 
 	const bAudioRef = useRef<HTMLAudioElement | null>(null);
 
-	const selectedCards = state.selected.map(id =>
-    state.cards.find(c => c.id === id)!
-  );
-
   return (
     <main className="min-h-screen bg-background bg-space-gradient">
 			<audio ref={bAudioRef} src="/background.mp3" />
@@ -84,9 +80,8 @@ export default function Page() {
         </div>
 				<ResultModal
             kind={state.modal}
-            cardA={selectedCards[0] ?? null}
-            cardB={selectedCards[1] ?? null}
             onClose={closeModal}
+						onReset={reset}
           />
       </section>
     </main>

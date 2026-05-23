@@ -48,8 +48,8 @@ export function useMemoryGame() {
             ...prev,
             timeLeft:     0,
             timerRunning: false,
-            locked:       true,
-            modal:         "expired",
+            locked: true,
+            modal: "expired",
             // Flip any unmatched face-up cards back over
             cards: prev.cards.map(c =>
               c.status === "flipped" ? { ...c, status: "hidden" } : c
@@ -70,7 +70,6 @@ export function useMemoryGame() {
 
 	function evaluate(selected: number[]) {
     const [a, b] = selected.map(uid => state.cards.find(c => c.id === uid)!);
-		console.log(a, b);
     const isMatch = a.pairId === b.pairId;
 		const newMatchedPairs = state.matchedPairs + (isMatch ? 1 : 0);
 		const allDone = isMatch && newMatchedPairs === PAIRS.length;
@@ -110,8 +109,6 @@ export function useMemoryGame() {
   }, []);
 
 	useEffect(() => {
-		
-		console.log(state);
 		// Evaluate after the flip animation completes (500ms)
     if (state.selected.length === 2) {
       setTimeout(() => evaluate(state.selected), 520);
