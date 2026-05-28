@@ -69,7 +69,7 @@ export function useMemoryGame() {
   // Re-run only when timerRunning flips — not on every state change
   }, [state.timerRunning]);
 
-	function evaluate(selected: number[]) {
+	const evaluate = useCallback((selected: number[]) => {
     const [a, b] = selected.map(uid => state.cards.find(c => c.id === uid)!);
     const isMatch = a.pairId === b.pairId;
 		const newMatchedPairs = state.matchedPairs + (isMatch ? 1 : 0);
@@ -88,7 +88,7 @@ export function useMemoryGame() {
           : c
       ),
     }));
-  }
+  }, [state.cards, state.matchedPairs])
 
   const flipCard = useCallback((id: number) => {
     const card = state.cards.find(c => c.id === id);
@@ -103,13 +103,13 @@ export function useMemoryGame() {
       ...prev,
       startTime: prev.startTime ?? Date.now(),
 			timerRunning: prev.timerRunning ? true : isFirstFlip,
-      selected: [...prev.selected, ...nextSelected],
+      selected: [...nextSelected],
       cards: prev.cards.map(c => c.id === id ? { ...c, status: "flipped" } : c),
       locked: nextSelected.length === 2,
     }));
 
     
-  }, []);
+  }, [state]);
 
 	useEffect(() => {
 		// Evaluate after the flip animation completes (500ms)

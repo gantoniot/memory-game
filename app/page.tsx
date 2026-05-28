@@ -15,7 +15,7 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-background bg-space-gradient">
-			<audio ref={bAudioRef} src="/background.mp3" />
+			<audio ref={bAudioRef} src="/background.mp3" loop/>
       <header className="sticky top-0 z-50 ">
         <div className="container-app">
           <div className="flex items-center justify-end h-14 md:h-16">
