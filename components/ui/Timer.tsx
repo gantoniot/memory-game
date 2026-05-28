@@ -27,7 +27,7 @@ export function TimerBar({ timeLeft, totalTime, active }: TimerBarProps) {
 
   return (
     <div className="flex items-center gap-3 w-full">
-			{isWarn && <audio src="/ticking.mp3" autoPlay/>}
+			{(isWarn || isCrit) && timeLeft > 0 && <audio src="/ticking.mp3" autoPlay loop/>}
       <span
         className={[
           "font-mono font-bold text-lg min-w-[2.5rem] text-right tabular-nums",

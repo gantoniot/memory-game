@@ -38,8 +38,8 @@ Manages the `dark` class on `<html>` and persists the user's color mode preferen
 ### 1. Clone and install dependencies
 
 ```bash
-git clone https://github.com/your-username/cosmos-ui.git
-cd cosmos-ui
+git clone https://github.com/gantoniot/memory-game.git
+cd memory-game
 npm install
 ```
 
@@ -56,9 +56,6 @@ npm install tailwindcss @tailwindcss/postcss
 
 # Dark mode
 npm install next-themes
-
-# Internationalisation
-npm install next-intl
 
 # TypeScript and types
 npm install -D typescript @types/node @types/react @types/react-dom
